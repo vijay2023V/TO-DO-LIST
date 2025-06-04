@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Simple To-Do List</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    max-width: 500px;
+    margin: 40px auto;
+    padding: 0 20px;
+    background: #f9f9f9;
+  }
+  h1 {
+    text-align: center;
+    color: #333;
+  }
+  input[type="text"] {
+    width: 75%;
+    padding: 10px;
+    font-size: 16px;
+  }
+  button {
+    padding: 10px 15px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  ul {
+    list-style: none;
+    padding-left: 0;
+  }
+  li {
+    background: white;
+    margin: 8px 0;
+    padding: 10px;
+    border-radius: 4px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  }
+  li.completed {
+    text-decoration: line-through;
+    color: gray;
+  }
+  .delete-btn {
+    background: #e74c3c;
+    border: none;
+    color: white;
+    padding: 6px 10px;
+    border-radius: 4px;
+  }
+</style>
+</head>
+<body>
+
+<h1>My To-Do List</h1>
+
+<input type="text" id="taskInput" placeholder="Add a new task..." />
+<button onclick="addTask()">Add</button>
+
+<ul id="taskList"></ul>
+
+<script>
+  const taskInput = document.getElementById('taskInput');
+  const taskList = document.getElementById('taskList');
+
+  function addTask() {
+    const taskText = taskInput.value.trim();
+    if (taskText === '') {
+      alert('Please enter a task!');
+      return;
+    }
+    
+    const li = document.createElement('li');
+    li.textContent = taskText;
+
+    // Toggle completed on click
+    li.addEventListener('click', () => {
+      li.classList.toggle('completed');
+    });
+
+    // Delete button
+    const delBtn = document.createElement('button');
+    delBtn.textContent = 'Delete';
+    delBtn.className = 'delete-btn';
+    delBtn.addEventListener('click', (e) => {
+      e.stopPropagation(); // prevent toggling completed
+      taskList.removeChild(li);
+    });
+
+    li.appendChild(delBtn);
+    taskList.appendChild(li);
+    taskInput.value = '';
+  }
+</script>
+
+</body>
+</html>
